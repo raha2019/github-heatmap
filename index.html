@@ -1,11 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GitHub Contribution Renderer</title>
+<style>
+  body {
+    margin: 0;
+    background: #0d1117;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  #container {
+    width: 240px;
+    height: 320px;
+    background: #0d1117;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+</style>
+</head>
+<body>
+
 <div id="container"></div>
 
 <script>
-const username = new URLSearchParams(window.location.search).get("user") || "goobta";
+const params = new URLSearchParams(window.location.search);
+const username = params.get("user") || "torvalds";
 
 fetch(`https://github.com/users/${username}/contributions`)
   .then(res => res.text())
   .then(svg => {
     document.getElementById("container").innerHTML = svg;
+  })
+  .catch(err => {
+    document.getElementById("container").innerText = "Failed to load.";
   });
 </script>
+
+</body>
+</html>
