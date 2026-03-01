@@ -31,19 +31,22 @@
 </head>
 <body>
 
-<div id="container"></div>
-
+<div id="debug" style="color:white;font-family:sans-serif;margin-bottom:8px;"></div>
 <script>
 const params = new URLSearchParams(window.location.search);
 const username = params.get("user") || "torvalds";
 
+// Show the username for debugging
+document.getElementById("debug").innerText = "Username: " + username;
+
+// Attempt fetch (will fail due to CORS now)
 fetch(`https://github.com/users/${username}/contributions`)
   .then(res => res.text())
   .then(svg => {
     document.getElementById("container").innerHTML = svg;
   })
   .catch(err => {
-    document.getElementById("container").innerText = "Failed to load.";
+    document.getElementById("container").innerText = "Failed to load contributions.";
   });
 </script>
 
